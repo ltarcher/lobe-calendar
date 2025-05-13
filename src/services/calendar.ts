@@ -52,9 +52,9 @@ export const getCalendarInfo = (dateStr?: string, timeStr?: string): CalendarRes
   const parseDate = (dateStr?: string) => {
     if (!dateStr) return new Date();
     
-    // 处理YYYY-MM-DD格式
+    // 处理YYYY-MM-DD格式，使用UTC时间避免时区问题
     const [year, month, day] = dateStr.split('-').map(Number);
-    return new Date(year, month - 1, day);
+    return new Date(Date.UTC(year, month - 1, day));
   };
   
   const date = parseDate(dateStr);
