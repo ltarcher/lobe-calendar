@@ -85,8 +85,12 @@ export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData
   // 获取年份的干支表示
   const yearGanZhi = lunar.getYearInGanZhi();
 
+  // 使用dayjs格式化日期，保持与输入时区一致
+  const formattedDate = dayjs.tz(date, timezone).format('YYYY-MM-DD');
+  
   return {
-    date: date.toISOString().split('T')[0],
+    date: formattedDate,
+    timezone, // 返回使用的时区
     lunar: {
       year: yearGanZhi + '年',
       month: lunar.getMonthInChinese() + '月',

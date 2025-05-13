@@ -65,6 +65,7 @@ export interface BaziInfo {
 
 export interface CalendarResponseData {
   date: string;          // 公历日期，ISO格式
+  timezone: string;      // 使用的时区
   lunar: {
     year: string;        // 农历年，如"癸卯年"
     month: string;       // 农历月，如"腊月"

@@ -5,6 +5,7 @@ describe('四柱功能测试', () => {
   it('应正确计算普通日期的四柱', () => {
     const result = getCalendarInfo({ date: '2023-10-01', time: '14:30' });
     // 实际计算结果可能与测试用例不同，这里更新为实际值
+    expect(result.timezone).toBe('Asia/Shanghai');
     expect(result.bazi).toMatchObject({
       year: '癸卯',
       month: '辛酉',
