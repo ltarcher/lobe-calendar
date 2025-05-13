@@ -40,6 +40,14 @@ export interface PluginState {
 
 export interface CalendarRequestData {
   date?: string; // ISO格式的日期字符串，如果不提供则使用当前日期
+  time?: string; // HH:mm格式的时间字符串，用于计算时柱
+  config?: {
+    showBazi?: boolean;
+    showSolarTerm?: boolean;
+    showFestivals?: boolean;
+    showLunarDate?: boolean;
+    showGregorianDate?: boolean;
+  };
 }
 
 export interface Festival {
