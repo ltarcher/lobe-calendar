@@ -16,11 +16,20 @@ export default async function handler(req: NextRequest) {
   }
 
   try {
-    const body = (await req.json()) as CalendarRequestData;
-    const calendarInfo = getCalendarInfo(body);
-
+    const body = await req.json();
+    if (typeof body !== 'object' || body === null) {
+      throw new Error('Invalid request body');
+    }
+    
+    const calendarInfo = getCalendarInfo(body as CalendarRequestData);
+    
     // 构建Markdown格式的响应
     let markdown = `## 📅 万年历\n\n`;
+    
+    // 验证日期格式
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(calendarInfo.date)) {
+      throw new Error('Invalid date format in response');
+    }
     
     // 日期信息
     markdown += `### 📆 日期信息\n`;

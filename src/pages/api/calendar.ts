@@ -16,12 +16,28 @@ export default async function handler(req: NextRequest) {
   }
 
   try {
-    const body = (await req.json()) as CalendarRequestData;
-    const calendarInfo = getCalendarInfo(body);
+    const body = await req.json();
+    if (typeof body !== 'object' || body === null) {
+      throw new Error('Invalid request body');
+    }
+    
+    const calendarInfo = getCalendarInfo(body as CalendarRequestData);
+    const response = JSON.stringify(calendarInfo);
+    
+    // 验证JSON格式
+    try {
+      JSON.parse(response);
+    } catch (e) {
+      console.error('Invalid JSON response:', response);
+      throw new Error('Failed to generate valid JSON response');
+    }
 
-    return new Response(JSON.stringify(calendarInfo), {
+    return new Response(response, {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store'
+      },
     });
   } catch (error) {
     console.error(error);
