@@ -39,8 +39,9 @@ export interface PluginState {
 }
 
 export interface CalendarRequestData {
-  date?: string; // ISO格式的日期字符串，如果不提供则使用当前日期
-  time?: string; // HH:mm格式的时间字符串，用于计算时柱
+  date?: string;    // 日期(YYYY-MM-DD)
+  time?: string;    // 时间(HH:mm)
+  timezone?: string; // 时区(如'Asia/Shanghai')，默认使用系统时区
   config?: {
     showBazi?: boolean;
     showSolarTerm?: boolean;

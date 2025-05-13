@@ -1,5 +1,12 @@
 import { Lunar } from 'lunar-typescript';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import type { CalendarResponseData, Festival } from '../type';
+
+// 扩展dayjs插件
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
@@ -47,14 +54,15 @@ const getTraditionalFestivals = (lunarMonth: number, lunarDay: number): Festival
  * @param dateStr ISO格式的日期字符串，如果不提供则使用当前日期
  * @param timeStr 时间字符串(HH:mm格式)，用于计算时柱
  */
-export const getCalendarInfo = (dateStr?: string, timeStr?: string): CalendarResponseData => {
-  // 修复日期解析，确保正确处理输入格式
-  const parseDate = (dateStr?: string) => {
-    if (!dateStr) return new Date();
+export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData => {
+  const { date: dateStr, time: timeStr, timezone = 'Asia/Shanghai', config } = data;
+  
+  // 修复日期解析，正确处理时区
+  const parseDate = (dateStr?: string, tz = timezone) => {
+    if (!dateStr) return dayjs().tz(tz).toDate();
     
-    // 处理YYYY-MM-DD格式，使用UTC时间避免时区问题
-    const [year, month, day] = dateStr.split('-').map(Number);
-    return new Date(Date.UTC(year, month - 1, day));
+    // 处理YYYY-MM-DD格式，使用指定时区
+    return dayjs.tz(dateStr, tz).toDate();
   };
   
   const date = parseDate(dateStr);

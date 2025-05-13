@@ -17,7 +17,7 @@ export default async function handler(req: NextRequest) {
 
   try {
     const body = (await req.json()) as CalendarRequestData;
-    const calendarInfo = getCalendarInfo(body.date, body.time);
+    const calendarInfo = getCalendarInfo(body);
 
     // 构建Markdown格式的响应
     let markdown = `## 📅 万年历\n\n`;

@@ -15,6 +15,10 @@
             "description": "要查询的时间，格式为HH:mm，用于计算时柱，如果不提供则显示'未知'",
             "type": "string"
           },
+          "timezone": {
+            "description": "时区标识符，如'Asia/Shanghai'，默认使用系统时区",
+            "type": "string"
+          },
           "config": {
             "description": "显示配置选项",
             "type": "object",

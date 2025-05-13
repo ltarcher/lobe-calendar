@@ -17,7 +17,7 @@ export default async function handler(req: NextRequest) {
 
   try {
     const body = (await req.json()) as CalendarRequestData;
-    const calendarInfo = getCalendarInfo(body.date, body.time);
+    const calendarInfo = getCalendarInfo(body);
 
     return new Response(JSON.stringify(calendarInfo), {
       status: 200,
