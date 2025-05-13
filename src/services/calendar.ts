@@ -2,7 +2,7 @@ import { Lunar } from 'lunar-typescript';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import type { CalendarResponseData, Festival } from '../type';
+import type { CalendarRequestData, CalendarResponseData, Festival } from '../type';
 
 // 扩展dayjs插件
 dayjs.extend(utc);
