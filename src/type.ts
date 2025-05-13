@@ -1,3 +1,15 @@
+export interface PluginState {
+  enabled: boolean;           // 插件是否启用
+  version: string;            // 插件版本
+  name: string;              // 插件名称
+  description: string;        // 插件描述
+  config?: {                 // 插件配置
+    showBazi?: boolean;      // 是否显示四柱信息
+    showSolarTerm?: boolean; // 是否显示节气
+    showFestivals?: boolean; // 是否显示节日
+  };
+}
+
 export interface CalendarRequestData {
   date?: string; // ISO格式的日期字符串，如果不提供则使用当前日期
 }
