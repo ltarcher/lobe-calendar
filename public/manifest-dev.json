@@ -4,20 +4,42 @@
     {
       "url": "http://localhost:3400/api/calendar",
       "name": "getCalendarInfo",
-      "description": "获取指定日期的万年历信息，包括农历、节气、节日等",
+      "description": "获取指定日期的万年历信息，包括农历、节气、节日和四柱信息",
       "parameters": {
         "properties": {
           "date": {
             "description": "要查询的日期，格式为YYYY-MM-DD，如果不提供则使用当前日期",
             "type": "string"
+          },
+          "time": {
+            "description": "要查询的时间，格式为HH:mm，用于计算时柱，如果不提供则显示'未知'",
+            "type": "string"
+          },
+          "config": {
+            "description": "显示配置选项",
+            "type": "object",
+            "properties": {
+              "showBazi": {
+                "description": "是否显示四柱信息(年柱/月柱/日柱/时柱)，默认true",
+                "type": "boolean"
+              },
+              "showSolarTerm": {
+                "description": "是否显示节气信息，默认true",
+                "type": "boolean"
+              },
+              "showFestivals": {
+                "description": "是否显示节日信息，默认true",
+                "type": "boolean"
+              }
+            }
           }
         },
         "type": "object"
       }
     }
   ],
-  "author": "LobeHub",
-  "createdAt": "2023-05-13",
+  "author": "ltarcher",
+  "createdAt": "2025-05-13",
   "gateway": "http://localhost:3400/api/gateway",
   "homepage": "https://github.com/yourusername/chat-plugin-chinese-calendar",
   "identifier": "chinese-calendar",

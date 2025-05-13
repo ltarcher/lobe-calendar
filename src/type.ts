@@ -1,12 +1,40 @@
+/**
+ * 万年历插件状态接口
+ * @typedef {Object} PluginState
+ * @property {boolean} enabled - 插件启用状态，默认true
+ * @property {string} version - 插件版本号，如'1.0.0'
+ * @property {string} name - 插件名称，如'万年历'
+ * @property {string} description - 插件功能描述
+ * @property {Object} [config] - 插件显示配置
+ * @property {boolean} [config.showBazi=true] - 是否显示四柱信息(年柱/月柱/日柱/时柱)
+ * @property {boolean} [config.showSolarTerm=true] - 是否显示二十四节气
+ * @property {boolean} [config.showFestivals=true] - 是否显示传统节日
+ * @property {boolean} [config.showLunarDate=true] - 是否显示农历日期
+ * @property {boolean} [config.showGregorianDate=true] - 是否显示公历日期
+ * @example
+ * // 基本用法
+ * const state = {
+ *   enabled: true,
+ *   version: '1.0.0',
+ *   name: '万年历',
+ *   description: '提供农历、节气、节日和四柱信息',
+ *   config: {
+ *     showBazi: true,
+ *     showSolarTerm: true
+ *   }
+ * }
+ */
 export interface PluginState {
-  enabled: boolean;           // 插件是否启用
-  version: string;            // 插件版本
-  name: string;              // 插件名称
-  description: string;        // 插件描述
-  config?: {                 // 插件配置
-    showBazi?: boolean;      // 是否显示四柱信息
-    showSolarTerm?: boolean; // 是否显示节气
-    showFestivals?: boolean; // 是否显示节日
+  enabled: boolean;
+  version: string;
+  name: string;
+  description: string;
+  config?: {
+    showBazi?: boolean;
+    showSolarTerm?: boolean;
+    showFestivals?: boolean;
+    showLunarDate?: boolean;
+    showGregorianDate?: boolean;
   };
 }
 

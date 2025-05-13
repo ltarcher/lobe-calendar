@@ -10,6 +10,8 @@ const defaultPluginState: PluginState = {
     showBazi: true,
     showSolarTerm: true,
     showFestivals: true,
+    showLunarDate: true,
+    showGregorianDate: true
   },
 };
 
