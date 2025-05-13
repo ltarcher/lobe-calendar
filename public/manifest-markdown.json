@@ -1,0 +1,31 @@
+{
+  "$schema": "../node_modules/@lobehub/chat-plugin-sdk/schema.json",
+  "api": [
+    {
+      "url": "http://localhost:3400/api/calendar-md",
+      "name": "getCalendarInfo",
+      "description": "获取指定日期的万年历信息，包括农历、节气、节日等",
+      "parameters": {
+        "properties": {
+          "date": {
+            "description": "要查询的日期，格式为YYYY-MM-DD，如果不提供则使用当前日期",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  ],
+  "author": "LobeHub",
+  "createdAt": "2023-05-13",
+  "identifier": "chinese-calendar-markdown",
+  "meta": {
+    "avatar": "📅",
+    "tags": ["calendar", "chinese", "lunar"],
+    "title": "万年历",
+    "description": "一个支持农历和公历的万年历插件，提供节气、传统节日和法定假日信息"
+  },
+  "systemRole": "你是一个万年历助手，可以查询并展示指定日期的公历和农历信息，包括节气、传统节日和法定假日。如果用户没有指定日期，默认使用当前日期。",
+  "type": "markdown",
+  "version": "1"
+}
