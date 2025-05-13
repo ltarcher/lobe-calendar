@@ -48,7 +48,16 @@ const getTraditionalFestivals = (lunarMonth: number, lunarDay: number): Festival
  * @param timeStr 时间字符串(HH:mm格式)，用于计算时柱
  */
 export const getCalendarInfo = (dateStr?: string, timeStr?: string): CalendarResponseData => {
-  const date = dateStr ? new Date(dateStr) : new Date();
+  // 修复日期解析，确保正确处理输入格式
+  const parseDate = (dateStr?: string) => {
+    if (!dateStr) return new Date();
+    
+    // 处理YYYY-MM-DD格式
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  };
+  
+  const date = parseDate(dateStr);
   const lunar = Lunar.fromDate(date);
 
   // 获取节日信息
