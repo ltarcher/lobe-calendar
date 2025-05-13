@@ -7,6 +7,13 @@ export interface Festival {
   type: 'traditional' | 'legal';
 }
 
+export interface BaziInfo {
+  year: string;  // 年柱
+  month: string; // 月柱
+  day: string;   // 日柱
+  hour: string;  // 时柱
+}
+
 export interface CalendarResponseData {
   date: string;          // 公历日期，ISO格式
   lunar: {
@@ -18,4 +25,5 @@ export interface CalendarResponseData {
   solarTerm?: string;    // 节气，如果当天有的话
   festivals: Festival[]; // 节日数组
   weekDay: string;      // 星期几
+  bazi?: BaziInfo;      // 四柱信息
 }

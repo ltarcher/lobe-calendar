@@ -45,8 +45,9 @@ const getTraditionalFestivals = (lunarMonth: number, lunarDay: number): Festival
 /**
  * 获取日历信息
  * @param dateStr ISO格式的日期字符串，如果不提供则使用当前日期
+ * @param timeStr 时间字符串(HH:mm格式)，用于计算时柱
  */
-export const getCalendarInfo = (dateStr?: string): CalendarResponseData => {
+export const getCalendarInfo = (dateStr?: string, timeStr?: string): CalendarResponseData => {
   const date = dateStr ? new Date(dateStr) : new Date();
   const lunar = Lunar.fromDate(date);
 
@@ -56,16 +57,28 @@ export const getCalendarInfo = (dateStr?: string): CalendarResponseData => {
     ...getTraditionalFestivals(lunar.getMonth(), lunar.getDay()),
   ];
 
+  // 计算四柱
+  const bazi = {
+    year: lunar.getYearInGanZhi(),
+    month: lunar.getMonthInGanZhi(),
+    day: lunar.getDayInGanZhi(),
+    hour: timeStr ? lunar.getTimeGan() + lunar.getTimeZhi() : '未知' // 组合天干地支
+  };
+
+  // 获取年份的干支表示
+  const yearGanZhi = lunar.getYearInGanZhi();
+
   return {
     date: date.toISOString().split('T')[0],
     lunar: {
-      year: lunar.getYearInChinese() + '年',
+      year: yearGanZhi + '年',
       month: lunar.getMonthInChinese() + '月',
       day: lunar.getDayInChinese(),
-      ganzhi: lunar.getYearInGanZhi(),
+      ganzhi: yearGanZhi,
     },
     solarTerm: lunar.getJieQi(), // 获取节气
     festivals,
     weekDay: `星期${WEEKDAYS[date.getDay()]}`,
+    bazi,
   };
 };
