@@ -77,3 +77,16 @@ export interface CalendarResponseData {
   weekDay: string;      // 星期几
   bazi?: BaziInfo;      // 四柱信息
 }
+
+export interface SolarTermRequestData {
+  name: string;           // 节气名称
+  year?: number;          // 年份，默认当前年
+  timezone?: string;      // 时区标识符
+}
+
+export interface LunarToSolarRequestData {
+  month: number;         // 农历月份(1-12)
+  day: number;           // 农历日期(1-30)
+  year?: number;         // 年份，默认当前年
+  timezone?: string;     // 时区标识符
+}

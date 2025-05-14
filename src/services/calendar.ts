@@ -1,8 +1,14 @@
-import { Lunar } from 'lunar-typescript';
+import { Lunar, Solar } from 'lunar-typescript';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import type { CalendarRequestData, CalendarResponseData, Festival } from '../type';
+import type { 
+  CalendarRequestData, 
+  CalendarResponseData, 
+  Festival,
+  SolarTermRequestData,
+  LunarToSolarRequestData 
+} from '../type';
 
 // 扩展dayjs插件
 dayjs.extend(utc);
@@ -54,6 +60,45 @@ const getTraditionalFestivals = (lunarMonth: number, lunarDay: number): Festival
  * @param dateStr ISO格式的日期字符串，如果不提供则使用当前日期
  * @param timeStr 时间字符串(HH:mm格式)，用于计算时柱
  */
+/**
+ * 获取指定节气在给定年份的公历日期
+ */
+export const getSolarTermDate = (data: SolarTermRequestData): string => {
+  const { name, year, timezone = 'Asia/Shanghai' } = data;
+  const targetYear = year || dayjs().tz(timezone).year();
+  
+  // 查找该节气在目标年份的日期
+  for (let month = 0; month < 12; month++) {
+    const date = new Date(targetYear, month, 1);
+    const lunar = Solar.fromDate(date).getLunar();
+    const solarTerm = lunar.getJieQi();
+    
+    if (solarTerm === name) {
+      return dayjs(date).tz(timezone).format('YYYY-MM-DD');
+    }
+  }
+  
+  throw new Error(`未找到节气: ${name}`);
+};
+
+/**
+ * 农历转公历
+ */
+export const lunarToSolar = (data: LunarToSolarRequestData): string => {
+  const { month, day, year, timezone = 'Asia/Shanghai' } = data;
+  const targetYear = year || dayjs().tz(timezone).year();
+  
+  // 创建农历对象并转换为公历
+  const lunar = Solar.fromYmdHms(targetYear, month, day, 0, 0, 0).getLunar();
+  const solarDate = lunar.getSolar();
+  
+  return dayjs(new Date(
+    solarDate.getYear(),
+    solarDate.getMonth() - 1,
+    solarDate.getDay()
+  )).tz(timezone).format('YYYY-MM-DD');
+};
+
 export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData => {
   const { date: dateStr, time: timeStr, timezone = 'Asia/Shanghai', config } = data;
   
@@ -66,7 +111,7 @@ export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData
   };
   
   const date = parseDate(dateStr);
-  const lunar = Lunar.fromDate(date);
+  const lunar = Solar.fromDate(date).getLunar();
 
   // 获取节日信息
   const festivals: Festival[] = [
