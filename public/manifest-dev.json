@@ -42,6 +42,20 @@
       }
     },
     {
+      "url": "http://localhost:3400/api/current-time",
+      "name": "getCurrentTime",
+      "description": "获取当前的日期、时间和时区信息",
+      "parameters": {
+        "properties": {
+          "timezone": {
+            "description": "时区标识符，如'Asia/Shanghai'，默认使用'Asia/Shanghai'",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
       "url": "http://localhost:3400/api/lunar-to-solar",
       "name": "convertLunarToSolar",
       "description": "将农历日期转换为公历日期",

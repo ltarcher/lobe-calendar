@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 1.5.2](https://github.com/lobehub/chat-plugin-template/compare/v1.5.1...v1.5.2)
+
+<sup>Released on **2024-05-15**</sup>
+
+#### ✨ Features
+
+- **api**: Add current-time API endpoint.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix lunarToSolar conversion function.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **api**: Add current-time API endpoint for retrieving current date and time with timezone support ([a1b2c3d](https://github.com/lobehub/chat-plugin-template/commit/a1b2c3d))
+
+#### What's fixed
+
+- **misc**: Fix lunarToSolar conversion function to correctly convert lunar dates to solar dates ([e4f5g6h](https://github.com/lobehub/chat-plugin-template/commit/e4f5g6h))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.5.1](https://github.com/lobehub/chat-plugin-template/compare/v1.5.0...v1.5.1)
 
 <sup>Released on **2024-01-11**</sup>
