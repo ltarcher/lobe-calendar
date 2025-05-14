@@ -89,14 +89,15 @@ export const lunarToSolar = (data: LunarToSolarRequestData): string => {
   const targetYear = year || dayjs().tz(timezone).year();
   
   // 创建农历对象并转换为公历
-  const lunar = Solar.fromYmdHms(targetYear, month, day, 0, 0, 0).getLunar();
+  const lunar = Lunar.fromYmd(targetYear, month, day);
   const solarDate = lunar.getSolar();
   
-  return dayjs(new Date(
-    solarDate.getYear(),
-    solarDate.getMonth() - 1,
-    solarDate.getDay()
-  )).tz(timezone).format('YYYY-MM-DD');
+  // 正确处理时区转换
+  return dayjs.tz(
+    `${solarDate.getYear()}-${solarDate.getMonth()}-${solarDate.getDay()}`,
+    'Asia/Shanghai' // 农历计算使用中国时区
+  ).tz(timezone) // 转换为用户指定时区
+   .format('YYYY-MM-DD');
 };
 
 export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData => {

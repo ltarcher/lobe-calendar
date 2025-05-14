@@ -40,6 +40,56 @@
         },
         "type": "object"
       }
+    },
+    {
+      "url": "http://localhost:3400/api/lunar-to-solar",
+      "name": "convertLunarToSolar",
+      "description": "将农历日期转换为公历日期",
+      "parameters": {
+        "properties": {
+          "year": {
+            "description": "农历年份",
+            "type": "number"
+          },
+          "month": {
+            "description": "农历月份(1-12)",
+            "type": "number"
+          },
+          "day": {
+            "description": "农历日期(1-30)",
+            "type": "number"
+          },
+          "timezone": {
+            "description": "时区标识符，如'Asia/Shanghai'，默认使用系统时区",
+            "type": "string"
+          }
+        },
+        "required": ["year", "month", "day"],
+        "type": "object"
+      }
+    },
+    {
+      "url": "http://localhost:3400/api/solar-term-date",
+      "name": "getSolarTermDate",
+      "description": "获取指定年份的节气公历日期",
+      "parameters": {
+        "properties": {
+          "name": {
+            "description": "节气名称，如'立春'、'雨水'等",
+            "type": "string"
+          },
+          "year": {
+            "description": "要查询的年份",
+            "type": "number"
+          },
+          "timezone": {
+            "description": "时区标识符，如'Asia/Shanghai'，默认使用系统时区",
+            "type": "string"
+          }
+        },
+        "required": ["name", "year"],
+        "type": "object"
+      }
     }
   ],
   "author": "ltarcher",
