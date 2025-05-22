@@ -168,7 +168,7 @@ export const lunarToSolar = (data: LunarToSolarRequestData): string => {
 };
 
 export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData => {
-  const { date: dateStr, time: timeStr, timezone = 'Asia/Shanghai', config } = data;
+  const { date: dateStr, time: timeStr, timezone = 'Asia/Shanghai' } = data;
   
   // 修复日期解析，正确处理时区
   const parseDate = (dateStr?: string, tz = timezone) => {
