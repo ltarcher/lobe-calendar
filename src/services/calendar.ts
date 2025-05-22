@@ -343,8 +343,8 @@ export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData
     return '未知';
   }
 
-  // 获取年份的干支表示
-  const yearGanZhi = lunar.getYearInGanZhi();
+  // 获取年份的干支表示（考虑立春）
+  const yearGanZhi = calculateYearGanZhi(lunar, solarTerm);
 
   // 使用dayjs格式化日期，保持与输入时区一致
   const formattedDate = dayjs.tz(date, timezone).format('YYYY-MM-DD');
