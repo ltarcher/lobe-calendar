@@ -50,8 +50,11 @@ describe('四柱功能测试', () => {
       console.log('春节四柱:', chunjie.bazi);
       
       // 2024年立春已过，年柱应为甲辰
-      expect(chuxi.bazi.year).toBe('甲辰');
-      expect(chunjie.bazi.year).toBe('甲辰');
+      expect(chuxi.bazi?.year).toBe('甲辰');
+      expect(chunjie.bazi?.year).toBe('甲辰');
+      // 确保bazi存在
+      expect(chuxi.bazi).toBeDefined();
+      expect(chunjie.bazi).toBeDefined();
     });
 
     it('立春前后的年柱变化测试', () => {
@@ -65,8 +68,11 @@ describe('四柱功能测试', () => {
       console.log('立春后四柱:', afterLiChun.bazi);
       
       // 立春前是壬寅年，立春后是癸卯年
-      expect(beforeLiChun.bazi.year).toBe('壬寅');
-      expect(afterLiChun.bazi.year).toBe('癸卯');
+      expect(beforeLiChun.bazi?.year).toBe('壬寅');
+      expect(afterLiChun.bazi?.year).toBe('癸卯');
+      // 确保bazi存在
+      expect(beforeLiChun.bazi).toBeDefined();
+      expect(afterLiChun.bazi).toBeDefined();
     });
   });
 
@@ -83,8 +89,10 @@ describe('四柱功能测试', () => {
       console.log('惊蛰后节气:', afterJingZhe.solarTerm);
       
       // 验证节气前后的月柱
-      console.log('惊蛰前月柱:', beforeJingZhe.bazi.month);
-      console.log('惊蛰后月柱:', afterJingZhe.bazi.month);
+      expect(beforeJingZhe.bazi).toBeDefined();
+      expect(afterJingZhe.bazi).toBeDefined();
+      console.log('惊蛰前月柱:', beforeJingZhe.bazi?.month);
+      console.log('惊蛰后月柱:', afterJingZhe.bazi?.month);
     });
   });
 
@@ -102,11 +110,16 @@ describe('四柱功能测试', () => {
       const ziEnd = getCalendarInfo({ date: '2024-02-11', time: '01:00' });
       console.log('子时结束四柱:', ziEnd.bazi);
 
+      // 确保bazi存在
+      expect(ziStart.bazi).toBeDefined();
+      expect(ziMiddle.bazi).toBeDefined();
+      expect(ziEnd.bazi).toBeDefined();
+
       // 检查时柱是否都是"子"
-      const isZiHour = (hour: string) => hour.endsWith('子');
-      console.log('子时开始时柱是否为子时:', isZiHour(ziStart.bazi.hour));
-      console.log('子时中间时柱是否为子时:', isZiHour(ziMiddle.bazi.hour));
-      console.log('子时结束时柱是否为子时:', isZiHour(ziEnd.bazi.hour));
+      const isZiHour = (hour?: string) => hour?.endsWith('子') ?? false;
+      console.log('子时开始时柱是否为子时:', isZiHour(ziStart.bazi?.hour));
+      console.log('子时中间时柱是否为子时:', isZiHour(ziMiddle.bazi?.hour));
+      console.log('子时结束时柱是否为子时:', isZiHour(ziEnd.bazi?.hour));
     });
   });
 
@@ -122,9 +135,13 @@ describe('四柱功能测试', () => {
       console.log('闰二月四柱:', runEryue.bazi);
       console.log('闰二月农历:', runEryue.lunar);
       
+      // 确保bazi存在
+      expect(eryue.bazi).toBeDefined();
+      expect(runEryue.bazi).toBeDefined();
+      
       // 比较月柱
-      console.log('二月月柱:', eryue.bazi.month);
-      console.log('闰二月月柱:', runEryue.bazi.month);
+      console.log('二月月柱:', eryue.bazi?.month);
+      console.log('闰二月月柱:', runEryue.bazi?.month);
     });
   });
 });
