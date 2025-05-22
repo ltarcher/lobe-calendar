@@ -261,9 +261,31 @@ export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData
       if (solarTerm && solarTerm.endsWith('节')) {
         const jieQiTable = lunar.getJieQiTable();
         const jieQiTime = jieQiTable ? jieQiTable[solarTerm] : null;
-        if (jieQiTime && new Date(lunar.getSolar().toYmd() + ' ' + (timeStr || '00:00')) >= jieQiTime) {
-          // 节气后使用下一个月的干支
-          return lunar.getNextMonthInGanZhi ? lunar.getNextMonthInGanZhi() : lunar.getMonthInGanZhi();
+        if (jieQiTime) {
+          // 将Solar对象转换为Date对象
+          const jieQiDate = new Date(jieQiTime.getYear(), jieQiTime.getMonth() - 1, jieQiTime.getDay());
+          const currentDate = new Date(lunar.getSolar().toYmd() + ' ' + (timeStr || '00:00'));
+          
+          if (currentDate >= jieQiDate) {
+            // 手动计算下个月干支（简化版）
+            try {
+              const currentMonthGZ = lunar.getMonthInGanZhi();
+              const [gan, zhi] = currentMonthGZ.split('');
+            
+              // 干支顺序表
+              const ganOrder = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+              const zhiOrder = ['寅','卯','辰','巳','午','未','申','酉','戌','亥','子','丑'];
+            
+              // 计算下个月干支
+              const nextGanIndex = (ganOrder.indexOf(gan) + 1) % 10;
+              const nextZhiIndex = (zhiOrder.indexOf(zhi) + 1) % 12;
+            
+              return ganOrder[nextGanIndex] + zhiOrder[nextZhiIndex];
+            } catch (e) {
+              console.error('计算下个月干支时出错:', e);
+              return lunar.getMonthInGanZhi(); // 回退到当前月干支
+            }
+          }
         }
       }
       
