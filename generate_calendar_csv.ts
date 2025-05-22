@@ -60,7 +60,9 @@ while (currentDate <= endDate) {
     calendarInfo.lunar?.year || '',
     calendarInfo.lunar?.month + calendarInfo.lunar?.day || '',
     calendarInfo.solarTerm || '',
-    calendarInfo.festivals?.join('|') || '',
+    (calendarInfo.festivals || []).map(f => 
+      typeof f === 'string' ? f : (f.name || '')
+    ).filter(Boolean).join('|') || '',
     calendarInfo.bazi?.year || '',
     calendarInfo.bazi?.month || '',
     calendarInfo.bazi?.day || '',
