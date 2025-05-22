@@ -31,11 +31,11 @@ class ProgressTracker {
 
 // CSV表头
 const header = '日期,农历年,农历月日,节气,节日,年柱,月柱,日柱,时柱\n';
-writeFileSync('calendar_1900_2050.csv', header, 'utf-8');
+writeFileSync('calendar_1900_2350.csv', header, 'utf-8');
 
 // 日期范围
 const startDate = new Date(1900, 0, 1);
-const endDate = new Date(2050, 11, 31);
+const endDate = new Date(2350, 11, 31);
 const totalDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 const progress = new ProgressTracker(totalDays);
 
@@ -73,7 +73,7 @@ while (currentDate <= endDate) {
   
   // 批量写入
   if (batchData.length >= BATCH_SIZE * 100 || currentDate >= endDate) {
-    writeFileSync('calendar_1900_2050.csv', batchData, { flag: 'a' });
+    writeFileSync('calendar_1900_2350.csv', batchData, { flag: 'a' });
     batchData = '';
   }
 
