@@ -199,36 +199,13 @@ export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData
     hour: timeStr ? calculateHourGanZhi(lunar, timeStr) : '未知'
   };
 
-  // 辅助函数：计算年柱（以立春为界）
+  // 辅助函数：计算年柱（使用库内置的精确计算）
   function calculateYearGanZhi(lunar: Lunar, solarTerm: string | null) {
     try {
-      const solar = lunar.getSolar();
-      const year = solar.getYear();
-      const month = solar.getMonth();
-      const day = solar.getDay();
-      
-      // 获取当年立春的日期
-      const jieQiTable = lunar.getJieQiTable();
-      const lichun = jieQiTable['立春'];
-      
-      // 如果没有立春信息，使用默认的农历年
-      if (!lichun) {
-        return lunar.getYearInGanZhi();
-      }
-
-      // 当前日期
-      const currentDate = new Date(year, month - 1, day);
-      // 立春日期
-      const lichunDate = new Date(lichun.getYear(), lichun.getMonth() - 1, lichun.getDay());
-
-      // 如果当前日期在立春前，使用上一年的干支
-      if (currentDate < lichunDate) {
-        // 获取上一年的农历对象
-        const prevYear = Solar.fromYmd(year - 1, month, day).getLunar();
-        return prevYear.getYearInGanZhi();
-      }
-
-      return lunar.getYearInGanZhi();
+      // 使用库提供的精确年柱计算，已考虑立春分界
+      return lunar.getYearInGanZhiExact 
+        ? lunar.getYearInGanZhiExact() 
+        : lunar.getYearInGanZhi();
     } catch (error) {
       console.error('计算年柱时出错:', error);
       return lunar.getYearInGanZhi();
