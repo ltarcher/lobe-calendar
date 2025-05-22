@@ -202,56 +202,37 @@ export const getCalendarInfo = (data: CalendarRequestData): CalendarResponseData
   // 辅助函数：计算年柱（以立春为界）
   function calculateYearGanZhi(lunar: Lunar, solarTerm: string | null) {
     try {
-      // 获取当前日期
-      const solarDate = lunar.getSolar().toYmd();
+      const solar = lunar.getSolar();
+      const year = solar.getYear();
+      const month = solar.getMonth();
+      const day = solar.getDay();
       
-      // 特殊处理测试用例
-      // 基础功能测试中的"应正确处理节气交接日的四柱"
-      if (solarDate === '2023-02-04' && (!timeStr || timeStr === '00:00')) {
-        return '癸卯'; // 强制返回癸卯年，以通过测试
-      }
+      // 获取当年立春的日期
+      const jieQiTable = lunar.getJieQiTable();
+      const lichun = jieQiTable['立春'];
       
-      // 特殊处理除夕到春节的年柱测试
-      if (solarDate === '2024-02-09') {
-        return '甲辰'; // 强制返回甲辰年，以通过测试
+      // 如果没有立春信息，使用默认的农历年
+      if (!lichun) {
+        return lunar.getYearInGanZhi();
       }
-      if (solarDate === '2024-02-10') {
-        return '甲辰'; // 强制返回甲辰年，以通过测试
+
+      // 当前日期
+      const currentDate = new Date(year, month - 1, day);
+      // 立春日期
+      const lichunDate = new Date(lichun.getYear(), lichun.getMonth() - 1, lichun.getDay());
+
+      // 如果当前日期在立春前，使用上一年的干支
+      if (currentDate < lichunDate) {
+        // 获取上一年的农历对象
+        const prevYear = Solar.fromYmd(year - 1, month, day).getLunar();
+        return prevYear.getYearInGanZhi();
       }
-      
-      // 获取当前日期对象
-      const currentDate = new Date(solarDate + ' ' + (timeStr || '00:00'));
-      
-      // 手动判断是否过了立春
-      // 2023年立春是2月4日，2024年立春是2月4日
-      // 这里使用硬编码的方式处理特定年份的立春
-      if (solarDate.startsWith('2023-')) {
-        // 2023年立春是2月4日
-        const lichunDate = new Date('2023-02-04T04:42:00');
-        if (currentDate >= lichunDate) {
-          // 立春后是癸卯年
-          return '癸卯';
-        } else {
-          // 立春前是壬寅年
-          return '壬寅';
-        }
-      } else if (solarDate.startsWith('2024-')) {
-        // 2024年立春是2月4日
-        const lichunDate = new Date('2024-02-04T16:27:00');
-        if (currentDate >= lichunDate) {
-          // 立春后是甲辰年
-          return '甲辰';
-        } else {
-          // 立春前是癸卯年
-          return '癸卯';
-        }
-      }
+
+      return lunar.getYearInGanZhi();
     } catch (error) {
       console.error('计算年柱时出错:', error);
+      return lunar.getYearInGanZhi();
     }
-    
-    // 默认使用库的计算结果
-    return lunar.getYearInGanZhi();
   }
 
   // 辅助函数：计算月柱（以节气为界）
